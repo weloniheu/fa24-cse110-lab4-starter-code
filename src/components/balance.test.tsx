@@ -1,0 +1,36 @@
+import React from 'react';
+import { render } from '@testing-library/react';
+import Remaining from './Remaining';
+import ExpenseTotal from './Expense/ExpenseTotal';
+import { AppContext } from './../context/AppContext';
+
+describe('Budget Balance Verification', () => {
+  test('calculates remaining balance correctly', () => {
+    const expenses = [
+      { id: '1', name: 'Utilities', cost: 200 },
+      { id: '2', name: 'Groceries', cost: 150 },
+    ];
+    const budget = 1000;
+    const setExpenses = jest.fn();
+    const setBudget = jest.fn();
+
+    const { getByText } = render(
+      <AppContext.Provider value={{ expenses, setExpenses, budget, setBudget }}>
+        <Remaining />
+        <ExpenseTotal />
+      </AppContext.Provider>
+    );
+
+    const totalExpenses = expenses.reduce((total, item) => total + item.cost, 0);
+    const remainingBalance = budget - totalExpenses;
+
+    // Assert Remaining balance is displayed correctly
+    expect(getByText(`Remaining: $${remainingBalance}`)).toBeInTheDocument();
+
+    // Assert Total Expenses is displayed correctly
+    expect(getByText(`Spent so far: $${totalExpenses}`)).toBeInTheDocument();
+
+    // Assert Budget equals Remaining + Spent
+    expect(remainingBalance + totalExpenses).toEqual(budget);
+  });
+});
