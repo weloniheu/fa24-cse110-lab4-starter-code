@@ -1,26 +1,41 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { render, fireEvent } from '@testing-library/react';
 import ExpenseItem from './ExpenseItem';
+import Remaining from '../Remaining';
+import ExpenseTotal from './ExpenseTotal';
 import { AppContext } from './../../context/AppContext';
 
 describe('ExpenseItem Component', () => {
   test('deletes an expense and updates the context', () => {
-    const expenseToDelete = { id: '1', name: 'Rent', cost: 500 };
-    const expenses = [expenseToDelete];
-    const setExpenses = jest.fn();
+    const expenseToDelete = { id: '1', name: 'Junk Food', cost: 500 };
+    const initialExpenses = [expenseToDelete];
     const budget = 1000;
-    const setBudget = jest.fn();
 
-    const { getByText } = render(
-      <AppContext.Provider value={{ expenses, setExpenses, budget, setBudget }}>
-        <ExpenseItem {...expenseToDelete} />
-      </AppContext.Provider>
-    );
+    const Wrapper = () => {
+      const [expenses, setExpenses] = useState(initialExpenses);
+      const [currentBudget, setBudget] = useState(budget);
 
-    // Click Delete button
+      return (
+        <AppContext.Provider value={{ expenses, setExpenses, budget: currentBudget, setBudget }}>
+          <ExpenseItem {...expenseToDelete} />
+          <Remaining />
+          <ExpenseTotal />
+        </AppContext.Provider>
+      );
+    };
+
+    const { getByText } = render(<Wrapper />);
+
+    // check the intial state with expense to be deleted for remaining and spent so far
+    expect(getByText(`Remaining: $500`)).toBeInTheDocument();
+    expect(getByText(`Spent so far: $500`)).toBeInTheDocument();
+
+    // Click Delete button to remove item
     fireEvent.click(getByText('x'));
 
-    // Assert setExpenses was called with updated expenses
-    expect(setExpenses).toHaveBeenCalledWith([]);
+    // After deletion check if the values have changed Assert updated Remaining balance and Total Expenses
+    expect(getByText(`Remaining: $1000`)).toBeInTheDocument();
+    expect(getByText(`Spent so far: $0`)).toBeInTheDocument();
+
   });
 });

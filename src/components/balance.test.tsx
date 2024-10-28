@@ -7,8 +7,8 @@ import { AppContext } from './../context/AppContext';
 describe('Budget Balance Verification', () => {
   test('calculates remaining balance correctly', () => {
     const expenses = [
-      { id: '1', name: 'Utilities', cost: 200 },
-      { id: '2', name: 'Groceries', cost: 150 },
+      { id: '1', name: 'Apples', cost: 20 },
+      { id: '2', name: 'Bananas', cost: 10 },
     ];
     const budget = 1000;
     const setExpenses = jest.fn();
