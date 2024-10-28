@@ -12,4 +12,20 @@ describe 'ExpenseItem Component'
 
     set the item of the list to be an item of 500 dollars and with a total budget of 1000
 
-    check that the 
+    check that the remaining is 500, the spent is 500 and that there is 1 'listitem'
+
+    remove said list item with fireevent click x
+
+    check the new remaining is 1000, the spent is 0 and that the there are not listitems
+
+
+describe 'Budget Balance Verification'
+  test - 'calculates remaining balance correctly'
+
+    make the instial list with apples and bananas, id and cost 1, 20 and 2, 10 respectively
+
+    assert that the remaining balance is displayed correctly with the forminal budget - totalExpenses
+
+    check that the amount spent thus far is equal to the total expenses
+
+    finally check that the remainder and spent amounts add up to the budget
