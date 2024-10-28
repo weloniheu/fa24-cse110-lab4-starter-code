@@ -14,9 +14,14 @@ const AddExpenseForm = () => {
   const onSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
+    // Somewhere in your codebase, create a helper function
+    const generateUniqueId = () => `${Date.now()}-${Math.floor(Math.random() * 10000)}`;
+
+
     // Exercise: Add add new expense to expenses context array
     const newExpense:Expense ={
-      id: crypto.randomUUID(),
+      // id: crypto.randomUUID(),
+      id: generateUniqueId(),
       name, 
       cost: parseFloat(cost),
     };

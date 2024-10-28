@@ -10,7 +10,7 @@ describe('Budget Balance Verification', () => {
       { id: '1', name: 'Apples', cost: 20 },
       { id: '2', name: 'Bananas', cost: 10 },
     ];
-    const budget = 1000;
+    const budget = 100;
     const setExpenses = jest.fn();
     const setBudget = jest.fn();
 

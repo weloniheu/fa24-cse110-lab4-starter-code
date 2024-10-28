@@ -3,22 +3,22 @@ import { useContext } from "react";
 import { AppContext } from "../../context/AppContext";
 
 
-const ExpenseItem = (currentExpense: Expense) => {
+const ExpenseItem = ({ id, name, cost }: Expense) => {
   // Exercise: Consume the AppContext here
   const { expenses, setExpenses } = useContext(AppContext);
 
-  const handleDeleteExpense = (currentExpense: Expense) => {
+  const handleDeleteExpense = () => {
     // Exercise: Remove expense from expenses context array
-    const updatedExpenses = expenses.filter((item) => item.id !== currentExpense.id);
+    const updatedExpenses = expenses.filter((item) => item.id !== id);
     setExpenses(updatedExpenses);
   };
 
   return (
     <li className="list-group-item d-flex justify-content-between align-items-center">
-      <div>{currentExpense.name}</div>
-      <div>${currentExpense.cost}</div>
+      <div>{name}</div>
+      <div>${cost}</div>
       <div>
-        <button onClick={() => handleDeleteExpense(currentExpense)}>x</button>
+        <button onClick={() => handleDeleteExpense()}>x</button>
       </div>
     </li>
   );

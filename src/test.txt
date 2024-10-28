@@ -1,0 +1,15 @@
+describe 'AddExpenseForm Component'
+  test - 'adds a new expense and updates the context'
+
+    grabs the place holders for the expense name and expense item as well as finds the save button to create to expense
+
+    creates new expense using fireevent.change with the place holders and fireevent.click
+
+    checks if the jest.fn() setExpense was called once and if it was with the specified name and const
+
+describe 'ExpenseItem Component'
+  test - 'deletes an expense and updates the context'
+
+    set the item of the list to be an item of 500 dollars and with a total budget of 1000
+
+    check that the 
